@@ -1,50 +1,35 @@
 # Kubernetes Monitoring Stack
 
-Production-style Kubernetes monitoring stack built using Prometheus, Grafana, and Alertmanager.
+Production-style Kubernetes monitoring and observability stack built using Prometheus, Grafana, and Alertmanager.
+
+This project focuses on infrastructure monitoring, Kubernetes observability, alerting systems, and production engineering concepts.
 
 ---
 
-## 🚀 Tech Stack
+# 🚀 Tech Stack
 
+## Infrastructure
 - Kubernetes
 - Docker
+
+## Monitoring & Observability
 - Prometheus
 - Grafana
 - Alertmanager
+
+## Automation
+- YAML
 - Helm
 
 ---
 
-## 📌 Features
-
-- Kubernetes cluster monitoring
-- Pod health metrics
-- CPU and memory monitoring
-- Alerting system
-- Grafana dashboards
-- Node monitoring
-
----
-
-## 📊 Monitoring Components
-
-### Prometheus
-Used for metrics collection and monitoring.
-
-### Grafana
-Used for visualization dashboards.
-
-### Alertmanager
-Handles alerts and notifications.
-
----
-
-## 🛠 Project Structure
+# 📂 Project Structure
 
 ```bash
 kubernetes-monitoring-stack/
+├── alerts/
+├── dashboards/
 ├── manifests/
 ├── monitoring/
-├── dashboards/
-├── alerts/
-└── screenshots/
+├── screenshots/
+└── README.md

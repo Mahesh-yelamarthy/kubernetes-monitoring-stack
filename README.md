@@ -1,198 +1,121 @@
 # Kubernetes Monitoring Stack
 
-Production-style Kubernetes monitoring and observability stack built using Prometheus, Grafana, and Alertmanager.
+Production-oriented Kubernetes monitoring and observability project built around Prometheus, Grafana, Alertmanager, and Kubernetes operational practices.
 
-This project focuses on infrastructure monitoring, Kubernetes observability, alerting systems, and production engineering concepts.
+This repository is part of a 30-day SRE / DevOps portfolio build. The project is intentionally developed in realistic daily increments to show how a monitoring platform evolves from a basic Kubernetes workload into a production-ready observability system with dashboards, alerts, runbooks, and incident response documentation.
 
----
+## Purpose
 
-# 🚀 Tech Stack
+The goal of this repository is to demonstrate how an SRE would design, document, and operate a Kubernetes monitoring stack that supports production reliability work.
 
-## Infrastructure
-- Kubernetes
-- Docker
+This project will gradually cover:
 
-## Monitoring & Observability
-- Prometheus
-- Grafana
-- Alertmanager
+- Kubernetes workload and cluster monitoring
+- Prometheus scrape configuration
+- Prometheus alerting rules
+- Grafana dashboards
+- Alertmanager routing
+- Operational runbooks
+- Troubleshooting guides
+- Incident response documentation
+- Production monitoring practices
 
-## Automation
-- YAML
-- Helm
+## Current Status
 
----
+Day 1 foundation is complete.
 
-# 📂 Project Structure
+The repository currently contains a baseline NGINX Kubernetes deployment and service under `manifests/`. These resources provide an initial workload that later monitoring configuration can target and validate against.
 
-```bash
-kubernetes-monitoring-stack/
-├── alerts/
-├── dashboards/
-├── manifests/
-├── monitoring/
-├── screenshots/
-└── README.md
-```
+Implementation files for Prometheus, Grafana, Alertmanager, alert rules, runbooks, and architecture diagrams will be added in future commits.
 
----
-
-# ⚙️ Kubernetes Resources
-
-## Deployment
-
-The project includes a Kubernetes Deployment resource for deploying NGINX containers with multiple replicas.
-
-File:
-
-```bash
-manifests/nginx-deployment.yaml
-```
-
-Features:
-- Multiple replicas
-- Label selectors
-- Container configuration
-- Port exposure
-
----
-
-## Service
-
-The project includes a Kubernetes Service resource for exposing the application.
-
-File:
-
-```bash
-manifests/nginx-service.yaml
-```
-
-Features:
-- LoadBalancer service
-- Internal pod communication
-- External access configuration
-
----
-
-# 📊 Monitoring Goals
-
-This project aims to implement:
-
-- Cluster monitoring
-- Pod monitoring
-- Node metrics
-- CPU and memory monitoring
-- Alerting systems
-- Dashboard visualization
-
----
-
-# 🚨 Planned Alerts
-
-- High CPU usage
-- Memory spikes
-- Pod restart failures
-- Node unavailability
-
----
-
-# 📈 Future Improvements
-
-- Add Prometheus metrics scraping
-- Add Grafana dashboards
-- Add Loki centralized logging
-- Add OpenTelemetry tracing
-- Add Slack alert integration
-- Add Helm chart deployment
-
----
-
-# 📷 Screenshots
-
-Screenshots and dashboard visuals will be added during implementation.
-
----
-
-# 📚 Learning Objectives
-
-- Kubernetes architecture
-- Infrastructure monitoring
-- Observability engineering
-- Production reliability concepts
-- Alerting and incident response
-
----
-
-# 🏗 Architecture Overview
+## Repository Structure
 
 ```text
-User Traffic
-     ↓
-Kubernetes Service
-     ↓
-NGINX Deployment
-     ↓
-Prometheus Metrics Collection
-     ↓
-Grafana Dashboards
-     ↓
-Alertmanager Notifications
+kubernetes-monitoring-stack/
+├── README.md
+├── docs/
+│   ├── architecture.md
+│   └── operations.md
+└── manifests/
+    ├── nginx-deployment.yaml
+    └── nginx-service.yaml
 ```
 
----
+Planned future directories:
 
-# ⚡ Kubernetes Commands
+```text
+alertmanager/
+grafana/
+prometheus/
+runbooks/
+docs/diagrams/
+```
 
-## Deploy Application
+## Existing Kubernetes Workload
+
+The current workload is a small NGINX application deployed with Kubernetes manifests.
+
+| File | Purpose |
+| --- | --- |
+| `manifests/nginx-deployment.yaml` | Defines the NGINX deployment and replica count. |
+| `manifests/nginx-service.yaml` | Exposes the NGINX deployment through a Kubernetes service. |
+
+Apply the workload:
 
 ```bash
 kubectl apply -f manifests/nginx-deployment.yaml
-```
-
-## Expose Service
-
-```bash
 kubectl apply -f manifests/nginx-service.yaml
 ```
 
-## Verify Pods
+Verify the workload:
 
 ```bash
 kubectl get pods
-```
-
-## Verify Services
-
-```bash
 kubectl get svc
 ```
 
----
+## Monitoring Goals
 
-# 🔍 Troubleshooting Notes
+This repository will grow into a monitoring stack that helps answer production questions quickly:
 
-## Common Issue: Pods in Pending State
+- Are Kubernetes nodes healthy?
+- Are workloads available and correctly replicated?
+- Are pods restarting or stuck in pending state?
+- Are CPU, memory, disk, or network resources saturated?
+- Are alert notifications actionable and routed correctly?
+- Does every critical alert have a runbook?
 
-Possible causes:
-- insufficient cluster resources
-- node scheduling issues
-- image pull failures
+## Operating Principles
 
-## Common Issue: Service Not Accessible
+This project follows production monitoring principles used by SRE and platform teams:
 
-Possible causes:
-- incorrect selector labels
-- service type misconfiguration
-- container port mismatch
+- Monitor symptoms before causes where possible.
+- Prefer actionable alerts over noisy alert volume.
+- Use dashboards for investigation and alerts for interruption.
+- Keep monitoring configuration under version control.
+- Connect critical alerts to runbooks.
+- Document ownership, escalation, and response expectations.
+- Review alert quality after incidents and recurring noise.
 
----
+## Documentation
 
-# 📖 Engineering Notes
+- [Architecture](docs/architecture.md)
+- [Operations](docs/operations.md)
 
-This project is designed to simulate a production-style Kubernetes monitoring environment focused on:
+## Recruiter Signal
 
-- reliability engineering
-- observability
-- infrastructure monitoring
-- Kubernetes troubleshooting
-- incident detection
+This repository is designed to show practical SRE capabilities:
+
+- Kubernetes observability knowledge
+- Production monitoring design
+- Alerting and incident response discipline
+- Infrastructure-as-documentation habits
+- Operational thinking beyond simple tool installation
+
+## Day 1 Commit
+
+Recommended commit message:
+
+```text
+docs: establish monitoring stack project foundation
+```

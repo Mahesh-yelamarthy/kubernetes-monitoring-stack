@@ -1,6 +1,6 @@
 # Monitoring Architecture
 
-This document describes the intended architecture for the Kubernetes monitoring stack. It starts with the Day 1 design foundation and will be expanded as Prometheus, Grafana, Alertmanager, dashboards, rules, runbooks, and diagrams are added.
+This document describes the architecture for the Kubernetes monitoring stack. The current implementation includes the Day 4 Prometheus configuration foundation and will be expanded as Grafana, Alertmanager, dashboards, rules, runbooks, and diagrams are added.
 
 ## Architecture Goals
 
@@ -24,15 +24,36 @@ The repository currently includes a small NGINX workload:
 
 This workload gives the project an initial application target for future monitoring configuration, dashboards, and alert rules.
 
-## Planned Components
+## Components
 
 | Component | Role | Production Purpose |
 | --- | --- | --- |
-| Prometheus | Metrics collection and rule evaluation | Scrapes Kubernetes and workload metrics, evaluates alert rules, and stores time series data for troubleshooting. |
+| Prometheus | Implemented configuration | Discovers Kubernetes targets, scrapes platform and annotated workload metrics, and loads version-controlled rule files. |
 | Grafana | Visualization | Provides dashboards for cluster health, workload behavior, resource saturation, and incident investigation. |
 | Alertmanager | Alert routing | Groups, deduplicates, silences, and routes alerts to the correct notification channel. |
 | Kubernetes metrics sources | Observability inputs | Provide node, pod, deployment, service, and control plane metrics for Prometheus to scrape. |
 | Runbooks | Response guidance | Convert alerts into repeatable investigation and mitigation steps. |
+
+## Prometheus Discovery
+
+Prometheus uses Kubernetes service discovery rather than fixed node or pod addresses.
+
+| Scrape job | Discovery role | Metrics source |
+| --- | --- | --- |
+| `kubernetes-apiservers` | Endpoints | Kubernetes API server |
+| `kubernetes-nodes` | Nodes | Kubelet metrics through the API server proxy |
+| `kubernetes-cadvisor` | Nodes | Container resource metrics through the API server proxy |
+| `kubernetes-pods` | Pods | Application metrics from explicitly annotated pods |
+
+Pod scraping is opt-in. A workload must provide a metrics endpoint and annotations such as:
+
+```yaml
+prometheus.io/scrape: "true"
+prometheus.io/port: "8080"
+prometheus.io/path: "/metrics"
+```
+
+The current NGINX workload does not expose Prometheus metrics and is therefore not annotated.
 
 ## High-Level Flow
 
@@ -62,6 +83,18 @@ Grafana dashboards support investigation
     v
 Runbooks guide incident response
 ```
+
+## Authentication and Authorization
+
+The configuration assumes Prometheus runs inside the cluster. It uses:
+
+- `/var/run/secrets/kubernetes.io/serviceaccount/token`
+- `/var/run/secrets/kubernetes.io/serviceaccount/ca.crt`
+- The internal `kubernetes.default.svc` API endpoint
+
+The Prometheus service account will require read access to Kubernetes discovery resources and access to node proxy metrics. The exact RBAC manifests will be added with the deployment layer rather than embedded in the scrape configuration.
+
+TLS verification remains enabled using the Kubernetes cluster CA. The configuration does not use `insecure_skip_verify`.
 
 ## Namespace Strategy
 
@@ -147,7 +180,7 @@ This repository assumes:
 
 Planned architecture additions:
 
-- Prometheus configuration under `prometheus/`
+- Prometheus alert rules under `prometheus/rules/`
 - Grafana dashboard JSON under `grafana/dashboards/`
 - Alertmanager routing under `alertmanager/`
 - Alert runbooks under `runbooks/`

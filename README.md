@@ -22,11 +22,11 @@ This project will gradually cover:
 
 ## Current Status
 
-Day 1 foundation is complete.
+Day 4 Prometheus configuration foundation is complete.
 
-The repository currently contains a baseline NGINX Kubernetes deployment and service under `manifests/`. These resources provide an initial workload that later monitoring configuration can target and validate against.
+The repository contains a baseline NGINX Kubernetes workload and an in-cluster Prometheus configuration. Prometheus can discover the Kubernetes API server, node metrics, cAdvisor metrics, and pods explicitly enabled through annotations.
 
-Implementation files for Prometheus, Grafana, Alertmanager, alert rules, runbooks, and architecture diagrams will be added in future commits.
+Grafana, Alertmanager, alert rules, runbooks, and architecture diagrams will be added in future commits.
 
 ## Repository Structure
 
@@ -36,20 +36,56 @@ kubernetes-monitoring-stack/
 ├── docs/
 │   ├── architecture.md
 │   └── operations.md
-└── manifests/
-    ├── nginx-deployment.yaml
-    └── nginx-service.yaml
+├── manifests/
+│   ├── nginx-deployment.yaml
+│   └── nginx-service.yaml
+└── prometheus/
+    ├── prometheus.yml
+    └── rules/
+        └── README.md
 ```
 
 Planned future directories:
 
 ```text
-alertmanager/
 grafana/
-prometheus/
 runbooks/
 docs/diagrams/
+alertmanager/
 ```
+
+## Prometheus Configuration
+
+The base configuration is stored at:
+
+```text
+prometheus/prometheus.yml
+```
+
+Configured scrape jobs:
+
+| Job | Purpose |
+| --- | --- |
+| `prometheus` | Monitors the Prometheus server itself. |
+| `kubernetes-apiservers` | Scrapes the Kubernetes API server metrics endpoint. |
+| `kubernetes-nodes` | Discovers nodes and scrapes kubelet metrics through the API server proxy. |
+| `kubernetes-cadvisor` | Collects container resource metrics from cAdvisor through the API server proxy. |
+| `kubernetes-pods` | Discovers pods with `prometheus.io/scrape: "true"` annotations. |
+
+The configuration assumes Prometheus runs inside Kubernetes with:
+
+- A mounted service account token
+- The cluster CA certificate
+- RBAC permission to discover nodes, pods, services, and endpoints
+- Permission to access node proxy metrics
+
+Validate the configuration before deployment:
+
+```bash
+promtool check config prometheus/prometheus.yml
+```
+
+The `cluster` and `environment` external labels are development placeholders and should be overridden for each deployed environment.
 
 ## Existing Kubernetes Workload
 
@@ -112,10 +148,8 @@ This repository is designed to show practical SRE capabilities:
 - Infrastructure-as-documentation habits
 - Operational thinking beyond simple tool installation
 
-## Day 1 Commit
-
-Recommended commit message:
+## Day 4 Commit
 
 ```text
-docs: establish monitoring stack project foundation
+feat: add base prometheus configuration
 ```

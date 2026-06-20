@@ -1,6 +1,6 @@
 # Monitoring Architecture
 
-This document describes the architecture for the Kubernetes monitoring stack. The current implementation includes the Day 4 Prometheus configuration foundation and will be expanded as Grafana, Alertmanager, dashboards, rules, runbooks, and diagrams are added.
+This document describes the architecture for the Kubernetes monitoring stack. The current implementation includes the Prometheus configuration foundation and baseline Kubernetes alert rules. It will be expanded as Grafana, Alertmanager, dashboards, additional runbooks, and diagrams are added.
 
 ## Architecture Goals
 
@@ -28,7 +28,7 @@ This workload gives the project an initial application target for future monitor
 
 | Component | Role | Production Purpose |
 | --- | --- | --- |
-| Prometheus | Implemented configuration | Discovers Kubernetes targets, scrapes platform and annotated workload metrics, and loads version-controlled rule files. |
+| Prometheus | Implemented configuration and rules | Discovers Kubernetes targets, scrapes platform and annotated workload metrics, and evaluates version-controlled alert rules. |
 | Grafana | Visualization | Provides dashboards for cluster health, workload behavior, resource saturation, and incident investigation. |
 | Alertmanager | Alert routing | Groups, deduplicates, silences, and routes alerts to the correct notification channel. |
 | Kubernetes metrics sources | Observability inputs | Provide node, pod, deployment, service, and control plane metrics for Prometheus to scrape. |
@@ -134,14 +134,19 @@ Metrics should be collected because they support reliability decisions, not simp
 
 Alerts should be actionable and tied to symptoms or high-risk infrastructure conditions.
 
-Examples of future alert categories:
+Current baseline alert categories:
 
-- Node resource saturation
+- Prometheus target health
 - Pod crash loops
 - Deployment replica mismatch
+- Node readiness
+- Pods stuck pending
+
+Future alert categories:
+
+- Node resource saturation
 - Persistent volume pressure
 - API server availability problems
-- Missing scrape targets
 - Service endpoint unavailability
 
 Every page-worthy alert should eventually include:

@@ -53,6 +53,24 @@ An alert should be considered production-ready when it includes:
 
 Avoid alerts that only say a metric changed without explaining why a responder should care.
 
+## Baseline Alert Operations
+
+The current baseline alert file is:
+
+```text
+prometheus/rules/kubernetes-alerts.yml
+```
+
+These rules cover early platform health signals: scrape target failures, nodes not ready, repeated pod restarts, pods stuck pending, and deployments below desired replica availability.
+
+Before enabling these alerts in a cluster, confirm kube-state-metrics is deployed and Prometheus is scraping it. Without kube-state-metrics, Kubernetes state expressions such as pod phase, deployment replica status, and node readiness will not evaluate.
+
+Use the Kubernetes alert runbook for response:
+
+```text
+runbooks/kubernetes-alerts.md
+```
+
 ## Dashboard Quality Standards
 
 A dashboard should be considered production-ready when it:
@@ -118,4 +136,4 @@ The monitoring stack itself can fail. Future documentation should cover:
 
 This Day 1 version defines the operational baseline and documentation structure.
 
-Implementation-specific operations will be added later as configuration files, dashboards, alert rules, and runbooks are introduced.
+Implementation-specific operations will continue to expand as dashboards, Alertmanager routing, additional rules, and incident response documents are introduced.

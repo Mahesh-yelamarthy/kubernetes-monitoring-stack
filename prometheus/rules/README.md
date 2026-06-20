@@ -14,7 +14,7 @@ The deployment mechanism must mount this repository directory at `/etc/prometheu
 
 | File | Purpose |
 | --- | --- |
-| `kubernetes-alerts.yml` | Kubernetes node, pod, and workload availability alerts. |
+| `kubernetes-alerts.yml` | Kubernetes node, pod, deployment, and Prometheus target health alerts. |
 | `recording-rules.yml` | Precomputed queries for dashboards and commonly reused expressions. |
 
 ## Rule Quality Requirements
@@ -43,4 +43,20 @@ Validate the complete Prometheus configuration:
 promtool check config prometheus/prometheus.yml
 ```
 
-No alert rules are added on Day 4. Kubernetes alert rules are scheduled for a later, separate change.
+## Current Alerts
+
+The baseline Kubernetes alert file is:
+
+```text
+prometheus/rules/kubernetes-alerts.yml
+```
+
+It includes alerts for:
+
+- Prometheus scrape target failures
+- Kubernetes nodes not ready
+- Repeated pod container restarts
+- Pods stuck pending
+- Deployments with unavailable replicas
+
+The Kubernetes state alerts require kube-state-metrics. The Prometheus target health alert uses the built-in `up` metric.

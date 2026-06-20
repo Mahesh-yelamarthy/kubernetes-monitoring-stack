@@ -22,11 +22,11 @@ This project will gradually cover:
 
 ## Current Status
 
-Day 4 Prometheus configuration foundation is complete.
+Day 7 Kubernetes alert rules are complete.
 
-The repository contains a baseline NGINX Kubernetes workload and an in-cluster Prometheus configuration. Prometheus can discover the Kubernetes API server, node metrics, cAdvisor metrics, and pods explicitly enabled through annotations.
+The repository contains a baseline NGINX Kubernetes workload, an in-cluster Prometheus configuration, baseline Kubernetes alerting rules, and an alert response runbook. Prometheus can discover the Kubernetes API server, node metrics, cAdvisor metrics, and pods explicitly enabled through annotations.
 
-Grafana, Alertmanager, alert rules, runbooks, and architecture diagrams will be added in future commits.
+Grafana, Alertmanager, additional runbooks, and architecture diagrams will be added in future commits.
 
 ## Repository Structure
 
@@ -39,17 +39,19 @@ kubernetes-monitoring-stack/
 ├── manifests/
 │   ├── nginx-deployment.yaml
 │   └── nginx-service.yaml
-└── prometheus/
-    ├── prometheus.yml
-    └── rules/
-        └── README.md
+├── prometheus/
+│   ├── prometheus.yml
+│   └── rules/
+│       ├── kubernetes-alerts.yml
+│       └── README.md
+└── runbooks/
+    └── kubernetes-alerts.md
 ```
 
 Planned future directories:
 
 ```text
 grafana/
-runbooks/
 docs/diagrams/
 alertmanager/
 ```
@@ -83,9 +85,30 @@ Validate the configuration before deployment:
 
 ```bash
 promtool check config prometheus/prometheus.yml
+promtool check rules prometheus/rules/*.yml
 ```
 
 The `cluster` and `environment` external labels are development placeholders and should be overridden for each deployed environment.
+
+## Baseline Alerts
+
+The baseline alert file is stored at:
+
+```text
+prometheus/rules/kubernetes-alerts.yml
+```
+
+Current alert coverage:
+
+| Alert | Severity | Purpose |
+| --- | --- | --- |
+| `PrometheusTargetDown` | warning | Detects failed Prometheus scrapes. |
+| `KubernetesNodeNotReady` | critical | Detects nodes that cannot safely run workloads. |
+| `KubernetesPodCrashLooping` | warning | Detects containers restarting repeatedly. |
+| `KubernetesPodPending` | warning | Detects pods that cannot be scheduled or started. |
+| `KubernetesDeploymentReplicasUnavailable` | critical | Detects deployments below desired availability. |
+
+Kubernetes state alerts require kube-state-metrics. Each alert includes severity, ownership labels, operational descriptions, and a runbook URL.
 
 ## Existing Kubernetes Workload
 
@@ -137,6 +160,7 @@ This project follows production monitoring principles used by SRE and platform t
 
 - [Architecture](docs/architecture.md)
 - [Operations](docs/operations.md)
+- [Kubernetes alert runbook](runbooks/kubernetes-alerts.md)
 
 ## Recruiter Signal
 
@@ -148,8 +172,8 @@ This repository is designed to show practical SRE capabilities:
 - Infrastructure-as-documentation habits
 - Operational thinking beyond simple tool installation
 
-## Day 4 Commit
+## Day 7 Commit
 
 ```text
-feat: add base prometheus configuration
+feat: add baseline kubernetes alert rules
 ```

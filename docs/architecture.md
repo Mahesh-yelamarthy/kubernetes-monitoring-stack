@@ -1,6 +1,6 @@
 # Monitoring Architecture
 
-This document describes the architecture for the Kubernetes monitoring stack. The current implementation includes the Prometheus configuration foundation and baseline Kubernetes alert rules. It will be expanded as Grafana, Alertmanager, dashboards, additional runbooks, and diagrams are added.
+This document describes the architecture for the Kubernetes monitoring stack. The current implementation includes the Prometheus configuration foundation, baseline Kubernetes alert rules, and a Kubernetes overview Grafana dashboard. It will be expanded as Alertmanager, additional dashboards, additional runbooks, and diagrams are added.
 
 ## Architecture Goals
 
@@ -29,7 +29,7 @@ This workload gives the project an initial application target for future monitor
 | Component | Role | Production Purpose |
 | --- | --- | --- |
 | Prometheus | Implemented configuration and rules | Discovers Kubernetes targets, scrapes platform and annotated workload metrics, and evaluates version-controlled alert rules. |
-| Grafana | Visualization | Provides dashboards for cluster health, workload behavior, resource saturation, and incident investigation. |
+| Grafana | Implemented dashboard | Provides dashboards for cluster health, workload behavior, resource saturation, and incident investigation. |
 | Alertmanager | Alert routing | Groups, deduplicates, silences, and routes alerts to the correct notification channel. |
 | Kubernetes metrics sources | Observability inputs | Provide node, pod, deployment, service, and control plane metrics for Prometheus to scrape. |
 | Runbooks | Response guidance | Convert alerts into repeatable investigation and mitigation steps. |
@@ -161,14 +161,19 @@ Every page-worthy alert should eventually include:
 
 ## Dashboard Strategy
 
-Grafana dashboards should support fast visual diagnosis. Planned dashboards will focus on:
+Grafana dashboards should support fast visual diagnosis. The current `Kubernetes Overview` dashboard focuses on:
 
 - Cluster overview
 - Node health
 - Workload health
+- Deployment and pod reliability
+
+Planned dashboard expansion will add:
+
 - Namespace resource usage
 - Alert status
-- Deployment and pod reliability
+- Persistent volume health
+- API server health
 
 Dashboards should not replace alerts. Dashboards are for investigation; alerts are for interruption.
 

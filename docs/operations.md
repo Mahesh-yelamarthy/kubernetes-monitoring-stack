@@ -83,6 +83,18 @@ A dashboard should be considered production-ready when it:
 - Provides enough context for incident triage
 - Can be understood by an on-call engineer under pressure
 
+## Baseline Dashboard Operations
+
+The current Grafana dashboard is:
+
+```text
+grafana/dashboards/kubernetes-overview.json
+```
+
+Use it as the first investigation surface for Kubernetes platform incidents. It is intentionally broad and should help responders decide whether to inspect scrape health, node health, workload restarts, pod scheduling, deployment availability, or resource saturation.
+
+Before relying on it during on-call, confirm the target cluster exposes kube-state-metrics, node-exporter metrics, and container CPU metrics.
+
 ## Incident Response Expectations
 
 During an incident, the monitoring stack should help responders:

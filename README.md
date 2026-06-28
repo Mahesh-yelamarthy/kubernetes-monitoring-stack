@@ -22,11 +22,11 @@ This project will gradually cover:
 
 ## Current Status
 
-Day 7 Kubernetes alert rules are complete.
+Day 10 Kubernetes overview dashboard is complete.
 
-The repository contains a baseline NGINX Kubernetes workload, an in-cluster Prometheus configuration, baseline Kubernetes alerting rules, and an alert response runbook. Prometheus can discover the Kubernetes API server, node metrics, cAdvisor metrics, and pods explicitly enabled through annotations.
+The repository contains a baseline NGINX Kubernetes workload, an in-cluster Prometheus configuration, baseline Kubernetes alerting rules, an alert response runbook, and a Grafana dashboard for Kubernetes operations triage.
 
-Grafana, Alertmanager, additional runbooks, and architecture diagrams will be added in future commits.
+Alertmanager, additional runbooks, and architecture diagrams will be added in future commits.
 
 ## Repository Structure
 
@@ -35,7 +35,11 @@ kubernetes-monitoring-stack/
 ├── README.md
 ├── docs/
 │   ├── architecture.md
+│   ├── grafana-dashboard.md
 │   └── operations.md
+├── grafana/
+│   └── dashboards/
+│       └── kubernetes-overview.json
 ├── manifests/
 │   ├── nginx-deployment.yaml
 │   └── nginx-service.yaml
@@ -110,6 +114,25 @@ Current alert coverage:
 
 Kubernetes state alerts require kube-state-metrics. Each alert includes severity, ownership labels, operational descriptions, and a runbook URL.
 
+## Grafana Dashboards
+
+The first dashboard is stored at:
+
+```text
+grafana/dashboards/kubernetes-overview.json
+```
+
+It provides:
+
+- Prometheus scrape target health
+- Kubernetes node readiness
+- Pod restart and pending pod indicators
+- Deployment availability checks
+- Node CPU and memory usage trends
+- Top pods by CPU usage
+
+The dashboard expects Prometheus metrics from kube-state-metrics, node-exporter, kubelet or cAdvisor, and the built-in `up` metric.
+
 ## Existing Kubernetes Workload
 
 The current workload is a small NGINX application deployed with Kubernetes manifests.
@@ -159,6 +182,7 @@ This project follows production monitoring principles used by SRE and platform t
 ## Documentation
 
 - [Architecture](docs/architecture.md)
+- [Grafana dashboard](docs/grafana-dashboard.md)
 - [Operations](docs/operations.md)
 - [Kubernetes alert runbook](runbooks/kubernetes-alerts.md)
 
@@ -172,8 +196,8 @@ This repository is designed to show practical SRE capabilities:
 - Infrastructure-as-documentation habits
 - Operational thinking beyond simple tool installation
 
-## Day 7 Commit
+## Day 10 Commit
 
 ```text
-feat: add baseline kubernetes alert rules
+feat: add kubernetes overview grafana dashboard
 ```

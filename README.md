@@ -22,18 +22,21 @@ This project will gradually cover:
 
 ## Current Status
 
-Day 10 Kubernetes overview dashboard is complete.
+Day 13 Alertmanager routing configuration is complete.
 
-The repository contains a baseline NGINX Kubernetes workload, an in-cluster Prometheus configuration, baseline Kubernetes alerting rules, an alert response runbook, and a Grafana dashboard for Kubernetes operations triage.
+The repository contains a baseline NGINX Kubernetes workload, an in-cluster Prometheus configuration, baseline Kubernetes alerting rules, an alert response runbook, a Grafana dashboard for Kubernetes operations triage, and baseline Alertmanager routing.
 
-Alertmanager, additional runbooks, and architecture diagrams will be added in future commits.
+Additional runbooks, troubleshooting guides, incident response documentation, and architecture diagrams will be added in future commits.
 
 ## Repository Structure
 
 ```text
 kubernetes-monitoring-stack/
+├── alertmanager/
+│   └── alertmanager.yml
 ├── README.md
 ├── docs/
+│   ├── alertmanager-routing.md
 │   ├── architecture.md
 │   ├── grafana-dashboard.md
 │   └── operations.md
@@ -55,9 +58,7 @@ kubernetes-monitoring-stack/
 Planned future directories:
 
 ```text
-grafana/
 docs/diagrams/
-alertmanager/
 ```
 
 ## Prometheus Configuration
@@ -133,6 +134,27 @@ It provides:
 
 The dashboard expects Prometheus metrics from kube-state-metrics, node-exporter, kubelet or cAdvisor, and the built-in `up` metric.
 
+## Alertmanager Routing
+
+The baseline Alertmanager configuration is stored at:
+
+```text
+alertmanager/alertmanager.yml
+```
+
+Current routing coverage:
+
+| Route | Matcher | Receiver | Purpose |
+| --- | --- | --- | --- |
+| Critical alerts | `severity="critical"` | `platform-critical` | Fast on-call interruption for high-impact platform symptoms. |
+| Warning alerts | `severity="warning"` | `platform-warning` | Actionable operational notification without immediate paging. |
+| Informational alerts | `severity="info"` | `platform-default` | Low-priority visibility for non-pageable conditions. |
+| Watchdog alerts | `alertname="Watchdog"` | `platform-heartbeat` | Synthetic alert path monitoring. |
+
+The configuration groups alerts by cluster, namespace, severity, and alert name. It also inhibits warning alerts when a matching critical alert is already active.
+
+The receiver URLs are internal placeholders and do not contain secrets. Replace them with approved production integrations during deployment.
+
 ## Existing Kubernetes Workload
 
 The current workload is a small NGINX application deployed with Kubernetes manifests.
@@ -182,6 +204,7 @@ This project follows production monitoring principles used by SRE and platform t
 ## Documentation
 
 - [Architecture](docs/architecture.md)
+- [Alertmanager routing](docs/alertmanager-routing.md)
 - [Grafana dashboard](docs/grafana-dashboard.md)
 - [Operations](docs/operations.md)
 - [Kubernetes alert runbook](runbooks/kubernetes-alerts.md)
@@ -196,8 +219,8 @@ This repository is designed to show practical SRE capabilities:
 - Infrastructure-as-documentation habits
 - Operational thinking beyond simple tool installation
 
-## Day 10 Commit
+## Day 13 Commit
 
 ```text
-feat: add kubernetes overview grafana dashboard
+feat: add alertmanager routing configuration
 ```

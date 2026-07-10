@@ -95,6 +95,31 @@ Use it as the first investigation surface for Kubernetes platform incidents. It 
 
 Before relying on it during on-call, confirm the target cluster exposes kube-state-metrics, node-exporter metrics, and container CPU metrics.
 
+## Alertmanager Routing Operations
+
+The current Alertmanager configuration is:
+
+```text
+alertmanager/alertmanager.yml
+```
+
+The baseline routing model sends critical, warning, info, and heartbeat alerts to separate webhook receivers. These receivers are intentionally placeholder internal URLs so the repository can document production routing behavior without committing vendor tokens or personal contact details.
+
+Before using this routing configuration in a production cluster:
+
+- Replace placeholder receivers with approved notification integrations.
+- Confirm every critical alert reaches an actively monitored on-call destination.
+- Confirm warning alerts are routed to the correct owning team.
+- Test a Watchdog alert through Prometheus and Alertmanager.
+- Confirm resolved notifications are delivered.
+- Review grouping and repeat intervals with the on-call team.
+
+The detailed routing guide is:
+
+```text
+docs/alertmanager-routing.md
+```
+
 ## Incident Response Expectations
 
 During an incident, the monitoring stack should help responders:
@@ -144,8 +169,8 @@ The monitoring stack itself can fail. Future documentation should cover:
 - Runbook drift
 - Monitoring namespace resource pressure
 
-## Day 1 Scope
+## Current Scope
 
-This Day 1 version defines the operational baseline and documentation structure.
+This version defines the operational baseline, Prometheus rule expectations, dashboard operations, and Alertmanager routing model.
 
-Implementation-specific operations will continue to expand as dashboards, Alertmanager routing, additional rules, and incident response documents are introduced.
+Implementation-specific operations will continue to expand as additional rules, runbooks, troubleshooting guides, and incident response documents are introduced.

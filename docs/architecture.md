@@ -1,6 +1,6 @@
 # Monitoring Architecture
 
-This document describes the architecture for the Kubernetes monitoring stack. The current implementation includes the Prometheus configuration foundation, baseline Kubernetes alert rules, and a Kubernetes overview Grafana dashboard. It will be expanded as Alertmanager, additional dashboards, additional runbooks, and diagrams are added.
+This document describes the architecture for the Kubernetes monitoring stack. The current implementation includes the Prometheus configuration foundation, baseline Kubernetes alert rules, a Kubernetes overview Grafana dashboard, and baseline Alertmanager routing. It will be expanded as additional dashboards, runbooks, troubleshooting guides, and diagrams are added.
 
 ## Architecture Goals
 
@@ -30,7 +30,7 @@ This workload gives the project an initial application target for future monitor
 | --- | --- | --- |
 | Prometheus | Implemented configuration and rules | Discovers Kubernetes targets, scrapes platform and annotated workload metrics, and evaluates version-controlled alert rules. |
 | Grafana | Implemented dashboard | Provides dashboards for cluster health, workload behavior, resource saturation, and incident investigation. |
-| Alertmanager | Alert routing | Groups, deduplicates, silences, and routes alerts to the correct notification channel. |
+| Alertmanager | Implemented routing foundation | Groups, deduplicates, inhibits, and routes alerts to the correct notification path. |
 | Kubernetes metrics sources | Observability inputs | Provide node, pod, deployment, service, and control plane metrics for Prometheus to scrape. |
 | Runbooks | Response guidance | Convert alerts into repeatable investigation and mitigation steps. |
 
@@ -75,7 +75,10 @@ Prometheus scrape jobs
     +--> Prometheus rules evaluate alert conditions
     |         |
     |         v
-    |     Alertmanager routes notifications
+    |     Alertmanager groups, inhibits, and routes notifications
+    |         |
+    |         v
+    |     Alert router or incident management integration
     |
     v
 Grafana dashboards support investigation
@@ -159,6 +162,8 @@ Every page-worthy alert should eventually include:
 - Escalation path
 - Link to a runbook
 
+The baseline Alertmanager routing model separates critical, warning, info, and heartbeat alerts. Critical alerts should page on-call responders. Warning alerts should notify the owning team without immediate interruption unless local policy says otherwise.
+
 ## Dashboard Strategy
 
 Grafana dashboards should support fast visual diagnosis. The current `Kubernetes Overview` dashboard focuses on:
@@ -192,6 +197,5 @@ Planned architecture additions:
 
 - Prometheus alert rules under `prometheus/rules/`
 - Grafana dashboard JSON under `grafana/dashboards/`
-- Alertmanager routing under `alertmanager/`
 - Alert runbooks under `runbooks/`
 - Mermaid architecture diagrams under `docs/diagrams/`

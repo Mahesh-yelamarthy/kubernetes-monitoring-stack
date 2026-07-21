@@ -58,5 +58,8 @@ It includes alerts for:
 - Repeated pod container restarts
 - Pods stuck pending
 - Deployments with unavailable replicas
+- Sustained node CPU saturation
+- Sustained node memory saturation
+- Low node filesystem space
 
-The Kubernetes state alerts require kube-state-metrics. The Prometheus target health alert uses the built-in `up` metric.
+The Kubernetes state alerts require kube-state-metrics. Resource saturation alerts require node-exporter metrics. The Prometheus target health alert uses the built-in `up` metric.

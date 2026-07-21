@@ -22,9 +22,9 @@ This project will gradually cover:
 
 ## Current Status
 
-Day 13 Alertmanager routing configuration is complete.
+Day 16 Kubernetes resource saturation alerts are complete.
 
-The repository contains a baseline NGINX Kubernetes workload, an in-cluster Prometheus configuration, baseline Kubernetes alerting rules, an alert response runbook, a Grafana dashboard for Kubernetes operations triage, and baseline Alertmanager routing.
+The repository contains a baseline NGINX Kubernetes workload, an in-cluster Prometheus configuration, Kubernetes health and resource saturation alerting rules, alert response runbooks, a Grafana dashboard for Kubernetes operations triage, and baseline Alertmanager routing.
 
 Additional runbooks, troubleshooting guides, incident response documentation, and architecture diagrams will be added in future commits.
 
@@ -112,8 +112,11 @@ Current alert coverage:
 | `KubernetesPodCrashLooping` | warning | Detects containers restarting repeatedly. |
 | `KubernetesPodPending` | warning | Detects pods that cannot be scheduled or started. |
 | `KubernetesDeploymentReplicasUnavailable` | critical | Detects deployments below desired availability. |
+| `KubernetesNodeHighCPUUsage` | warning | Detects sustained node CPU saturation. |
+| `KubernetesNodeHighMemoryUsage` | warning | Detects sustained node memory saturation. |
+| `KubernetesNodeFilesystemSpaceLow` | critical | Detects low available node filesystem space. |
 
-Kubernetes state alerts require kube-state-metrics. Each alert includes severity, ownership labels, operational descriptions, and a runbook URL.
+Kubernetes state alerts require kube-state-metrics. Resource saturation alerts require node-exporter metrics. Each alert includes severity, ownership labels, operational descriptions, and a runbook URL.
 
 ## Grafana Dashboards
 
@@ -219,8 +222,8 @@ This repository is designed to show practical SRE capabilities:
 - Infrastructure-as-documentation habits
 - Operational thinking beyond simple tool installation
 
-## Day 13 Commit
+## Day 16 Commit
 
 ```text
-feat: add alertmanager routing configuration
+feat: add kubernetes resource saturation alerts
 ```

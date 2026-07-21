@@ -147,10 +147,10 @@ Current baseline alert categories:
 
 Future alert categories:
 
-- Node resource saturation
 - Persistent volume pressure
 - API server availability problems
 - Service endpoint unavailability
+- Kubernetes job and cronjob failures
 
 Every page-worthy alert should eventually include:
 

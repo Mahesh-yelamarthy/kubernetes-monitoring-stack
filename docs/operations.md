@@ -61,9 +61,9 @@ The current baseline alert file is:
 prometheus/rules/kubernetes-alerts.yml
 ```
 
-These rules cover early platform health signals: scrape target failures, nodes not ready, repeated pod restarts, pods stuck pending, and deployments below desired replica availability.
+These rules cover platform health and capacity signals: scrape target failures, nodes not ready, repeated pod restarts, pods stuck pending, deployments below desired replica availability, sustained node CPU usage, sustained node memory usage, and low node filesystem space.
 
-Before enabling these alerts in a cluster, confirm kube-state-metrics is deployed and Prometheus is scraping it. Without kube-state-metrics, Kubernetes state expressions such as pod phase, deployment replica status, and node readiness will not evaluate.
+Before enabling these alerts in a cluster, confirm kube-state-metrics and node-exporter are deployed and Prometheus is scraping them. Without kube-state-metrics, Kubernetes state expressions such as pod phase, deployment replica status, and node readiness will not evaluate. Without node-exporter, resource saturation alerts for CPU, memory, and filesystem space will not evaluate.
 
 Use the Kubernetes alert runbook for response:
 

@@ -61,3 +61,44 @@ groups:
           summary: "Deployment has unavailable replicas"
           description: "Deployment {{ $labels.namespace }}/{{ $labels.deployment }} has fewer available replicas than desired for at least 10 minutes."
           runbook_url: "https://github.com/Mahesh-yelamarthy/kubernetes-monitoring-stack/blob/main/runbooks/kubernetes-alerts.md#kubernetesdeploymentreplicasunavailable"
+
+      - alert: KubernetesNodeHighCPUUsage
+        expr: 100 - (avg by (instance) (rate(node_cpu_seconds_total{mode="idle"}[5m])) * 100) > 85
+        for: 15m
+        labels:
+          severity: warning
+          team: sre
+          category: capacity
+        annotations:
+          summary: "Kubernetes node CPU usage is high"
+          description: "Node exporter target {{ $labels.instance }} has sustained CPU usage above 85% for at least 15 minutes. Workload scheduling or node capacity may need review."
+          runbook_url: "https://github.com/Mahesh-yelamarthy/kubernetes-monitoring-stack/blob/main/runbooks/kubernetes-alerts.md#kubernetesnodehighcpuusage"
+
+      - alert: KubernetesNodeHighMemoryUsage
+        expr: (1 - (node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes)) * 100 > 85
+        for: 15m
+        labels:
+          severity: warning
+          team: sre
+          category: capacity
+        annotations:
+          summary: "Kubernetes node memory usage is high"
+          description: "Node exporter target {{ $labels.instance }} has sustained memory usage above 85% for at least 15 minutes. Pods may be at risk of eviction or OOM kills."
+          runbook_url: "https://github.com/Mahesh-yelamarthy/kubernetes-monitoring-stack/blob/main/runbooks/kubernetes-alerts.md#kubernetesnodehighmemoryusage"
+
+      - alert: KubernetesNodeFilesystemSpaceLow
+        expr: |
+          (
+            node_filesystem_avail_bytes{fstype!~"tmpfs|overlay|squashfs",mountpoint!~"/run.*|/var/lib/kubelet/pods.*"}
+            /
+            node_filesystem_size_bytes{fstype!~"tmpfs|overlay|squashfs",mountpoint!~"/run.*|/var/lib/kubelet/pods.*"}
+          ) * 100 < 15
+        for: 15m
+        labels:
+          severity: critical
+          team: sre
+          category: capacity
+        annotations:
+          summary: "Kubernetes node filesystem space is low"
+          description: "Node exporter target {{ $labels.instance }} mount {{ $labels.mountpoint }} has less than 15% available filesystem space for at least 15 minutes."
+          runbook_url: "https://github.com/Mahesh-yelamarthy/kubernetes-monitoring-stack/blob/main/runbooks/kubernetes-alerts.md#kubernetesnodefilesystemspacelow"

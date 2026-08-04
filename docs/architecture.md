@@ -1,6 +1,6 @@
 # Monitoring Architecture
 
-This document describes the architecture for the Kubernetes monitoring stack. The current implementation includes the Prometheus configuration foundation, baseline Kubernetes alert rules, a Kubernetes overview Grafana dashboard, and baseline Alertmanager routing. It will be expanded as additional dashboards, runbooks, troubleshooting guides, and diagrams are added.
+This document describes the architecture for the Kubernetes monitoring stack. The current implementation includes the Prometheus configuration foundation, baseline Kubernetes alert rules, Prometheus recording rules, a Kubernetes overview Grafana dashboard, and baseline Alertmanager routing. It will be expanded as additional dashboards, runbooks, troubleshooting guides, and diagrams are added.
 
 ## Architecture Goals
 
@@ -28,7 +28,7 @@ This workload gives the project an initial application target for future monitor
 
 | Component | Role | Production Purpose |
 | --- | --- | --- |
-| Prometheus | Implemented configuration and rules | Discovers Kubernetes targets, scrapes platform and annotated workload metrics, and evaluates version-controlled alert rules. |
+| Prometheus | Implemented configuration and rules | Discovers Kubernetes targets, scrapes platform and annotated workload metrics, evaluates alert rules, and precomputes reusable recording rules. |
 | Grafana | Implemented dashboard | Provides dashboards for cluster health, workload behavior, resource saturation, and incident investigation. |
 | Alertmanager | Implemented routing foundation | Groups, deduplicates, inhibits, and routes alerts to the correct notification path. |
 | Kubernetes metrics sources | Observability inputs | Provide node, pod, deployment, service, and control plane metrics for Prometheus to scrape. |
@@ -71,6 +71,8 @@ Kubernetes metrics endpoints and exporters
     |
     v
 Prometheus scrape jobs
+    |
+    +--> Recording rules precompute reusable reliability signals
     |
     +--> Prometheus rules evaluate alert conditions
     |         |
@@ -132,6 +134,8 @@ The stack will prioritize metrics that are useful during production incidents:
 - Application-level request rate, error rate, and latency when exposed
 
 Metrics should be collected because they support reliability decisions, not simply because they are available.
+
+Recording rules should be used for frequently repeated dashboard and alert queries such as node utilization, filesystem availability, namespace restart rates, and unavailable replica totals.
 
 ## Alerting Strategy
 

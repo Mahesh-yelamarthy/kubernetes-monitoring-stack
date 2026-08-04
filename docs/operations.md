@@ -71,6 +71,22 @@ Use the Kubernetes alert runbook for response:
 runbooks/kubernetes-alerts.md
 ```
 
+## Recording Rule Operations
+
+The current recording rules are:
+
+```text
+prometheus/rules/recording-rules.yml
+```
+
+Recording rules are part of the monitoring API consumed by dashboards and alerts. Before renaming or removing one, search existing dashboards and alert rules for references and migrate consumers first.
+
+Validate recording rules with:
+
+```bash
+promtool check rules prometheus/rules/*.yml
+```
+
 ## Dashboard Quality Standards
 
 A dashboard should be considered production-ready when it:
@@ -171,6 +187,6 @@ The monitoring stack itself can fail. Future documentation should cover:
 
 ## Current Scope
 
-This version defines the operational baseline, Prometheus rule expectations, dashboard operations, and Alertmanager routing model.
+This version defines the operational baseline, Prometheus alert and recording rule expectations, dashboard operations, and Alertmanager routing model.
 
 Implementation-specific operations will continue to expand as additional rules, runbooks, troubleshooting guides, and incident response documents are introduced.

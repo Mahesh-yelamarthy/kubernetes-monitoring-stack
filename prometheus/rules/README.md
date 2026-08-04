@@ -1,6 +1,6 @@
 # Prometheus Rules
 
-This directory will contain version-controlled Prometheus recording and alerting rules.
+This directory contains version-controlled Prometheus recording and alerting rules.
 
 The base Prometheus configuration loads files matching:
 
@@ -10,7 +10,7 @@ The base Prometheus configuration loads files matching:
 
 The deployment mechanism must mount this repository directory at `/etc/prometheus/rules` inside the Prometheus container.
 
-## Planned Rule Files
+## Rule Files
 
 | File | Purpose |
 | --- | --- |
@@ -63,3 +63,21 @@ It includes alerts for:
 - Low node filesystem space
 
 The Kubernetes state alerts require kube-state-metrics. Resource saturation alerts require node-exporter metrics. The Prometheus target health alert uses the built-in `up` metric.
+
+## Current Recording Rules
+
+The baseline recording rule file is:
+
+```text
+prometheus/rules/recording-rules.yml
+```
+
+It includes reusable expressions for:
+
+- Cluster and node CPU utilization
+- Node memory utilization
+- Node filesystem availability
+- Namespace pod restart rate
+- Namespace pending pod count
+- Namespace unavailable deployment replicas
+- Down Prometheus targets by job

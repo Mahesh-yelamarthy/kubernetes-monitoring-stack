@@ -1,0 +1,54 @@
+groups:
+  - name: kubernetes-recording-rules
+    interval: 30s
+    rules:
+      - record: cluster:node_cpu_utilization:ratio
+        expr: 1 - avg(rate(node_cpu_seconds_total{mode="idle"}[5m]))
+        labels:
+          team: sre
+          category: capacity
+
+      - record: node:node_cpu_utilization:ratio
+        expr: 1 - avg by (instance) (rate(node_cpu_seconds_total{mode="idle"}[5m]))
+        labels:
+          team: sre
+          category: capacity
+
+      - record: node:node_memory_utilization:ratio
+        expr: 1 - (node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes)
+        labels:
+          team: sre
+          category: capacity
+
+      - record: node:node_filesystem_available:ratio
+        expr: |
+          node_filesystem_avail_bytes{fstype!~"tmpfs|overlay|squashfs",mountpoint!~"/run.*|/var/lib/kubelet/pods.*"}
+          /
+          node_filesystem_size_bytes{fstype!~"tmpfs|overlay|squashfs",mountpoint!~"/run.*|/var/lib/kubelet/pods.*"}
+        labels:
+          team: sre
+          category: capacity
+
+      - record: namespace:pod_container_restarts:rate5m
+        expr: sum by (namespace) (rate(kube_pod_container_status_restarts_total[5m]))
+        labels:
+          team: sre
+          category: workload
+
+      - record: namespace:pod_pending:count
+        expr: sum by (namespace) (kube_pod_status_phase{phase="Pending"} == 1)
+        labels:
+          team: sre
+          category: workload
+
+      - record: namespace:deployment_unavailable_replicas:sum
+        expr: sum by (namespace) (kube_deployment_status_replicas_unavailable)
+        labels:
+          team: sre
+          category: workload
+
+      - record: job:prometheus_targets_down:count
+        expr: sum by (job) (up == 0)
+        labels:
+          team: sre
+          category: monitoring

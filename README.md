@@ -22,9 +22,9 @@ This project will gradually cover:
 
 ## Current Status
 
-Day 16 Kubernetes resource saturation alerts are complete.
+Day 19 Prometheus recording rules are complete.
 
-The repository contains a baseline NGINX Kubernetes workload, an in-cluster Prometheus configuration, Kubernetes health and resource saturation alerting rules, alert response runbooks, a Grafana dashboard for Kubernetes operations triage, and baseline Alertmanager routing.
+The repository contains a baseline NGINX Kubernetes workload, an in-cluster Prometheus configuration, Kubernetes health and resource saturation alerting rules, Prometheus recording rules, alert response runbooks, a Grafana dashboard for Kubernetes operations triage, and baseline Alertmanager routing.
 
 Additional runbooks, troubleshooting guides, incident response documentation, and architecture diagrams will be added in future commits.
 
@@ -39,7 +39,8 @@ kubernetes-monitoring-stack/
 │   ├── alertmanager-routing.md
 │   ├── architecture.md
 │   ├── grafana-dashboard.md
-│   └── operations.md
+│   ├── operations.md
+│   └── recording-rules.md
 ├── grafana/
 │   └── dashboards/
 │       └── kubernetes-overview.json
@@ -50,6 +51,7 @@ kubernetes-monitoring-stack/
 │   ├── prometheus.yml
 │   └── rules/
 │       ├── kubernetes-alerts.yml
+│       ├── recording-rules.yml
 │       └── README.md
 └── runbooks/
     └── kubernetes-alerts.md
@@ -117,6 +119,18 @@ Current alert coverage:
 | `KubernetesNodeFilesystemSpaceLow` | critical | Detects low available node filesystem space. |
 
 Kubernetes state alerts require kube-state-metrics. Resource saturation alerts require node-exporter metrics. Each alert includes severity, ownership labels, operational descriptions, and a runbook URL.
+
+## Recording Rules
+
+The baseline recording rule file is stored at:
+
+```text
+prometheus/rules/recording-rules.yml
+```
+
+It precomputes reusable PromQL expressions for node CPU, node memory, filesystem availability, namespace restart rates, pending pods, unavailable replicas, and down scrape targets.
+
+Recording rules give dashboards and alerts stable query names while reducing repeated PromQL complexity.
 
 ## Grafana Dashboards
 
@@ -210,6 +224,7 @@ This project follows production monitoring principles used by SRE and platform t
 - [Alertmanager routing](docs/alertmanager-routing.md)
 - [Grafana dashboard](docs/grafana-dashboard.md)
 - [Operations](docs/operations.md)
+- [Prometheus recording rules](docs/recording-rules.md)
 - [Kubernetes alert runbook](runbooks/kubernetes-alerts.md)
 
 ## Recruiter Signal
@@ -222,8 +237,8 @@ This repository is designed to show practical SRE capabilities:
 - Infrastructure-as-documentation habits
 - Operational thinking beyond simple tool installation
 
-## Day 16 Commit
+## Day 19 Commit
 
 ```text
-feat: add kubernetes resource saturation alerts
+feat: add prometheus recording rules
 ```

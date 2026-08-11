@@ -22,11 +22,11 @@ This project will gradually cover:
 
 ## Current Status
 
-Day 19 Prometheus recording rules are complete.
+Day 22 monitoring architecture diagrams are complete.
 
-The repository contains a baseline NGINX Kubernetes workload, an in-cluster Prometheus configuration, Kubernetes health and resource saturation alerting rules, Prometheus recording rules, alert response runbooks, a Grafana dashboard for Kubernetes operations triage, and baseline Alertmanager routing.
+The repository contains a baseline NGINX Kubernetes workload, an in-cluster Prometheus configuration, Kubernetes health and resource saturation alerting rules, Prometheus recording rules, alert response runbooks, a Grafana dashboard for Kubernetes operations triage, baseline Alertmanager routing, and reviewable Mermaid monitoring architecture diagrams.
 
-Additional runbooks, troubleshooting guides, incident response documentation, and architecture diagrams will be added in future commits.
+Additional runbooks, troubleshooting guides, incident response documentation, and production monitoring practices will be added in future commits.
 
 ## Repository Structure
 
@@ -38,6 +38,8 @@ kubernetes-monitoring-stack/
 ├── docs/
 │   ├── alertmanager-routing.md
 │   ├── architecture.md
+│   ├── diagrams/
+│   │   └── monitoring-architecture.md
 │   ├── grafana-dashboard.md
 │   ├── operations.md
 │   └── recording-rules.md
@@ -223,6 +225,7 @@ This project follows production monitoring principles used by SRE and platform t
 - [Architecture](docs/architecture.md)
 - [Alertmanager routing](docs/alertmanager-routing.md)
 - [Grafana dashboard](docs/grafana-dashboard.md)
+- [Monitoring architecture diagrams](docs/diagrams/monitoring-architecture.md)
 - [Operations](docs/operations.md)
 - [Prometheus recording rules](docs/recording-rules.md)
 - [Kubernetes alert runbook](runbooks/kubernetes-alerts.md)
@@ -237,8 +240,8 @@ This repository is designed to show practical SRE capabilities:
 - Infrastructure-as-documentation habits
 - Operational thinking beyond simple tool installation
 
-## Day 19 Commit
+## Day 22 Commit
 
 ```text
-feat: add prometheus recording rules
+docs: add monitoring architecture diagrams
 ```

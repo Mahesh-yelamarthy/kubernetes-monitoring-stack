@@ -1,6 +1,6 @@
 # Monitoring Architecture
 
-This document describes the architecture for the Kubernetes monitoring stack. The current implementation includes the Prometheus configuration foundation, baseline Kubernetes alert rules, Prometheus recording rules, a Kubernetes overview Grafana dashboard, and baseline Alertmanager routing. It will be expanded as additional dashboards, runbooks, troubleshooting guides, and diagrams are added.
+This document describes the architecture for the Kubernetes monitoring stack. The current implementation includes the Prometheus configuration foundation, baseline Kubernetes alert rules, Prometheus recording rules, a Kubernetes overview Grafana dashboard, baseline Alertmanager routing, and reviewable Mermaid architecture diagrams. It will be expanded as additional dashboards, runbooks, troubleshooting guides, and incident response documents are added.
 
 ## Architecture Goals
 
@@ -12,6 +12,14 @@ The monitoring stack should help an SRE answer four production questions quickly
 4. What should the responder check first during an incident?
 
 The design emphasizes operational clarity over tool sprawl. Each component should have a clear responsibility, documented ownership, and a direct connection to incident response.
+
+The companion diagram document is:
+
+```text
+docs/diagrams/monitoring-architecture.md
+```
+
+Use it when reviewing data flow, alert flow, deployment boundaries, and incident investigation paths.
 
 ## Current Workload
 
@@ -199,7 +207,7 @@ This repository assumes:
 
 Planned architecture additions:
 
-- Prometheus alert rules under `prometheus/rules/`
-- Grafana dashboard JSON under `grafana/dashboards/`
-- Alert runbooks under `runbooks/`
-- Mermaid architecture diagrams under `docs/diagrams/`
+- Additional Grafana dashboard JSON under `grafana/dashboards/`
+- Additional alert runbooks under `runbooks/`
+- Troubleshooting and incident response guides under `docs/`
+- Diagram updates under `docs/diagrams/` when architecture changes

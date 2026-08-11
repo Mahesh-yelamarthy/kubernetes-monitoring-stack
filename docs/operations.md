@@ -147,6 +147,14 @@ During an incident, the monitoring stack should help responders:
 5. Follow the relevant runbook.
 6. Capture findings for post-incident review.
 
+Use the architecture diagrams to orient responders when the failure path is unclear:
+
+```text
+docs/diagrams/monitoring-architecture.md
+```
+
+The diagrams show metrics data flow, alert lifecycle, deployment boundaries, and the expected investigation loop from alert to dashboard to runbook.
+
 ## Routine Maintenance
 
 Recommended recurring maintenance:
@@ -187,6 +195,6 @@ The monitoring stack itself can fail. Future documentation should cover:
 
 ## Current Scope
 
-This version defines the operational baseline, Prometheus alert and recording rule expectations, dashboard operations, and Alertmanager routing model.
+This version defines the operational baseline, Prometheus alert and recording rule expectations, dashboard operations, Alertmanager routing model, and architecture diagram usage.
 
 Implementation-specific operations will continue to expand as additional rules, runbooks, troubleshooting guides, and incident response documents are introduced.

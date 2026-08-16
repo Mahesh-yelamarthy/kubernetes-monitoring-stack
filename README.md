@@ -22,11 +22,11 @@ This project will gradually cover:
 
 ## Current Status
 
-Day 22 monitoring architecture diagrams are complete.
+Day 25 incident response documentation is complete.
 
-The repository contains a baseline NGINX Kubernetes workload, an in-cluster Prometheus configuration, Kubernetes health and resource saturation alerting rules, Prometheus recording rules, alert response runbooks, a Grafana dashboard for Kubernetes operations triage, baseline Alertmanager routing, and reviewable Mermaid monitoring architecture diagrams.
+The repository contains a baseline NGINX Kubernetes workload, an in-cluster Prometheus configuration, Kubernetes health and resource saturation alerting rules, Prometheus recording rules, alert response runbooks, a Grafana dashboard for Kubernetes operations triage, baseline Alertmanager routing, reviewable Mermaid monitoring architecture diagrams, and production incident response documentation.
 
-Additional runbooks, troubleshooting guides, incident response documentation, and production monitoring practices will be added in future commits.
+Additional troubleshooting guides and production monitoring practices will be added in future commits.
 
 ## Repository Structure
 
@@ -41,6 +41,7 @@ kubernetes-monitoring-stack/
 │   ├── diagrams/
 │   │   └── monitoring-architecture.md
 │   ├── grafana-dashboard.md
+│   ├── incident-response.md
 │   ├── operations.md
 │   └── recording-rules.md
 ├── grafana/
@@ -57,12 +58,6 @@ kubernetes-monitoring-stack/
 │       └── README.md
 └── runbooks/
     └── kubernetes-alerts.md
-```
-
-Planned future directories:
-
-```text
-docs/diagrams/
 ```
 
 ## Prometheus Configuration
@@ -225,6 +220,7 @@ This project follows production monitoring principles used by SRE and platform t
 - [Architecture](docs/architecture.md)
 - [Alertmanager routing](docs/alertmanager-routing.md)
 - [Grafana dashboard](docs/grafana-dashboard.md)
+- [Incident response](docs/incident-response.md)
 - [Monitoring architecture diagrams](docs/diagrams/monitoring-architecture.md)
 - [Operations](docs/operations.md)
 - [Prometheus recording rules](docs/recording-rules.md)
@@ -240,8 +236,8 @@ This repository is designed to show practical SRE capabilities:
 - Infrastructure-as-documentation habits
 - Operational thinking beyond simple tool installation
 
-## Day 22 Commit
+## Day 25 Commit
 
 ```text
-docs: add monitoring architecture diagrams
+docs: add incident response guide
 ```

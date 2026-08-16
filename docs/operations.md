@@ -155,6 +155,12 @@ docs/diagrams/monitoring-architecture.md
 
 The diagrams show metrics data flow, alert lifecycle, deployment boundaries, and the expected investigation loop from alert to dashboard to runbook.
 
+Use the incident response guide for severity classification, evidence capture, escalation, mitigation safety, and post-incident follow-up:
+
+```text
+docs/incident-response.md
+```
+
 ## Routine Maintenance
 
 Recommended recurring maintenance:
@@ -195,6 +201,6 @@ The monitoring stack itself can fail. Future documentation should cover:
 
 ## Current Scope
 
-This version defines the operational baseline, Prometheus alert and recording rule expectations, dashboard operations, Alertmanager routing model, and architecture diagram usage.
+This version defines the operational baseline, Prometheus alert and recording rule expectations, dashboard operations, Alertmanager routing model, architecture diagram usage, and incident response workflow.
 
 Implementation-specific operations will continue to expand as additional rules, runbooks, troubleshooting guides, and incident response documents are introduced.

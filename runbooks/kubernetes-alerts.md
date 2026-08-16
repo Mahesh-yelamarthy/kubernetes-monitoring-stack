@@ -2,6 +2,12 @@
 
 This runbook supports the baseline Prometheus alerts in `prometheus/rules/kubernetes-alerts.yml`.
 
+For severity classification, escalation, evidence capture, and post-incident follow-up, use the incident response guide:
+
+```text
+docs/incident-response.md
+```
+
 ## Metric Dependencies
 
 These alerts assume Prometheus can scrape:

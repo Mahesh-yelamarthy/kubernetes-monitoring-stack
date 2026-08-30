@@ -39,6 +39,16 @@ Recommended review checklist:
 - Are thresholds justified by expected production behavior?
 - Can the change be rolled back cleanly?
 
+## Production Monitoring Practices
+
+The detailed production monitoring standards are documented in:
+
+```text
+docs/production-monitoring-practices.md
+```
+
+Use this guide when reviewing alert quality, dashboard design, runbook completeness, Alertmanager behavior, and post-incident monitoring follow-up. It defines the expected standards for symptoms versus causes, severity selection, alert metadata, dashboard usefulness, metrics lifecycle, and recurring monitoring reviews.
+
 ## Alert Quality Standards
 
 An alert should be considered production-ready when it includes:
@@ -201,6 +211,6 @@ The monitoring stack itself can fail. Future documentation should cover:
 
 ## Current Scope
 
-This version defines the operational baseline, Prometheus alert and recording rule expectations, dashboard operations, Alertmanager routing model, architecture diagram usage, and incident response workflow.
+This version defines the operational baseline, Prometheus alert and recording rule expectations, dashboard operations, Alertmanager routing model, architecture diagram usage, incident response workflow, and production monitoring practice standards.
 
-Implementation-specific operations will continue to expand as additional rules, runbooks, troubleshooting guides, and incident response documents are introduced.
+Implementation-specific operations will continue to expand as additional rules, runbooks, troubleshooting guides, and production-readiness documents are introduced.

@@ -22,11 +22,11 @@ This project will gradually cover:
 
 ## Current Status
 
-Day 25 incident response documentation is complete.
+Day 28 production monitoring practices are complete.
 
-The repository contains a baseline NGINX Kubernetes workload, an in-cluster Prometheus configuration, Kubernetes health and resource saturation alerting rules, Prometheus recording rules, alert response runbooks, a Grafana dashboard for Kubernetes operations triage, baseline Alertmanager routing, reviewable Mermaid monitoring architecture diagrams, and production incident response documentation.
+The repository contains a baseline NGINX Kubernetes workload, an in-cluster Prometheus configuration, Kubernetes health and resource saturation alerting rules, Prometheus recording rules, alert response runbooks, a Grafana dashboard for Kubernetes operations triage, baseline Alertmanager routing, reviewable Mermaid monitoring architecture diagrams, production incident response documentation, and production monitoring practice standards.
 
-Additional troubleshooting guides and production monitoring practices will be added in future commits.
+Additional troubleshooting guides and final portfolio polish will be added in future commits.
 
 ## Repository Structure
 
@@ -43,6 +43,7 @@ kubernetes-monitoring-stack/
 │   ├── grafana-dashboard.md
 │   ├── incident-response.md
 │   ├── operations.md
+│   ├── production-monitoring-practices.md
 │   └── recording-rules.md
 ├── grafana/
 │   └── dashboards/
@@ -223,6 +224,7 @@ This project follows production monitoring principles used by SRE and platform t
 - [Incident response](docs/incident-response.md)
 - [Monitoring architecture diagrams](docs/diagrams/monitoring-architecture.md)
 - [Operations](docs/operations.md)
+- [Production monitoring practices](docs/production-monitoring-practices.md)
 - [Prometheus recording rules](docs/recording-rules.md)
 - [Kubernetes alert runbook](runbooks/kubernetes-alerts.md)
 
@@ -236,8 +238,8 @@ This repository is designed to show practical SRE capabilities:
 - Infrastructure-as-documentation habits
 - Operational thinking beyond simple tool installation
 
-## Day 25 Commit
+## Day 28 Commit
 
 ```text
-docs: add incident response guide
+docs: add production monitoring practices
 ```

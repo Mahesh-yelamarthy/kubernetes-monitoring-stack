@@ -14,6 +14,8 @@ Use this guide when:
 
 This guide does not replace service-specific runbooks. It provides the platform response wrapper around those runbooks.
 
+Use `docs/production-monitoring-practices.md` after an incident when evaluating whether detection was early, actionable, correctly routed, and supported by useful dashboards and runbooks.
+
 ## Incident Objectives
 
 During an incident, the responder should:
@@ -199,6 +201,8 @@ After recovery:
 5. Identify whether detection was early, late, noisy, or missing.
 6. Update alert thresholds, dashboards, runbooks, or routing as needed.
 7. Create follow-up work with an owner.
+
+Use the production monitoring practices guide to decide whether follow-up work belongs in alert tuning, dashboard design, Alertmanager routing, runbook updates, or metrics lifecycle cleanup.
 
 ## Follow-Up Categories
 
